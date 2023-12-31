@@ -1,18 +1,10 @@
-/*
- * File: 102-zombie.c
- * Auth: Brennan D Baraban
- */
-
 #include <stdio.h>
-#include <stdlib.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 #include <unistd.h>
-
+#include <stdlib.h>
 /**
- * infinite_while - Run an infinite while loop.
- *
- * Return: Always 0.
+ * infinite_while - sleeps forever
+ * Return: 1
  */
 int infinite_while(void)
 {
@@ -20,5 +12,24 @@ int infinite_while(void)
 	{
 		sleep(1);
 	}
+	return (0);
+}
+/**
+ * main - creates 5 zombies
+ * Return: always 1
+ */
+int main(void)
+{
+	int i;
+
+	for (i = 0; i < 5; i++)
+	{
+		if (fork() == 0)
+		{
+			printf("Zombie process created, PID: %d\n", getpid());
+			exit(0);
+		}
+	}
+	infinite_while();
 	return (0);
 }
